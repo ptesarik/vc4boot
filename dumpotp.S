@@ -11,6 +11,13 @@
 _start:
 	bl uart_init
 
+	mov r6, OTP_BASE
+	lea r0, txt_bootmode
+	bl  uart_puts
+	ld  r0, (r6)		; OTP_BOOTMODE_REG
+	bl  uart_puthexword
+	bl  uart_putcrlf
+
 	mov r6, 0		; OTP register address
 
 loop_reg:
@@ -92,3 +99,8 @@ otp_close:
 	bl  delay
 	st  r2, (r1 + OTP_CONFIG_REG)
 	ldm pc, (sp++)
+
+txt_bootmode:
+	.asciz "BOOTMODE: "
+
+	.align 2
