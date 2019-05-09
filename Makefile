@@ -1,8 +1,8 @@
-AS=vc4-as
-AR=vc4-ar
-RANLIB=vc4-ranlib
-LD=vc4-ld
-OBJCOPY=vc4-objcopy
+AS=vc4-elf-as
+AR=vc4-elf-ar
+RANLIB=vc4-elf-ranlib
+LD=vc4-elf-ld
+OBJCOPY=vc4-elf-objcopy
 
 %.o: %.S
 	$(AS) -o $@ $<
