@@ -3,6 +3,7 @@
 
 	.global _start
 _start:
+	mov r0, SYSTEM_CLOCK
 	bl uart_init
 
 	;; Print Hello, world!\r\n

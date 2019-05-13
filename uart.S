@@ -7,9 +7,13 @@
 
 	.text
 
+;;; r0 ... base rate (VPU)
+;;;
 	.global uart_init
 uart_init:
 	stm lr,(--sp)
+	mov r1, TARGET_BAUD_RATE*8
+	div.uu r3, r0, r1
 
 	;; Configure TX and RX GPIO pins for Mini Uart function.
 	mov r1, GPIO_BASE
@@ -44,8 +48,8 @@ uart_init:
 	mov r2, 0xc6
 	st  r0, (r1 + UART_AUX_MU_MCR_REG)
 	st  r0, (r1 + UART_AUX_MU_IER_REG)
-	mov r0, ((SYSTEM_CLOCK/(TARGET_BAUD_RATE*8))-1)
 	st  r2, (r1 + UART_AUX_MU_IIR_REG)
+	add r0, r3, -1
 	mov r2, 3
 	st  r0, (r1 + UART_AUX_MU_BAUD_REG)
 	st  r2, (r1 + UART_AUX_MU_LCR_REG)

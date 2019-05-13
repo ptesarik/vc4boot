@@ -9,6 +9,7 @@
 
 	.global _start
 _start:
+	mov r0, SYSTEM_CLOCK
 	bl uart_init
 
 	mov r6, OTP_BASE
