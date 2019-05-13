@@ -13,6 +13,6 @@ OBJCOPY=vc4-elf-objcopy
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
 
-libvc4.a: delay.o ledflash.o uart.o uart_putchars.o uart_puthex.o uart_puts.o
+libvc4.a: delay.o ledflash.o otp.o uart.o uart_putchars.o uart_puthex.o uart_puts.o
 	$(AR) cr $@ $^
 	$(RANLIB) $@
