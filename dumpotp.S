@@ -9,7 +9,8 @@
 
 	.global _start
 _start:
-	mov r0, SYSTEM_CLOCK
+	mov r0, CM_VPUCTL
+	bl  clk_get_freq
 	bl uart_init
 
 	mov r6, OTP_BASE
