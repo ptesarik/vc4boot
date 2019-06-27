@@ -2,7 +2,16 @@
 ;;; Get clock frequency
 ;;;
 
+.include "config.inc"
 .include "mmio.inc"
+
+.if RPI_MODEL < 4
+;;; Raspberry Pi 1, 2 & 3 use a 19.2 MHz base crystal
+	OSCFREQ = 0x4b927c00	; 19.2 * 10^6
+.else
+;;; Raspberry Pi 4 has a 54.0 MHz base crystal
+	OSCFREQ = 0x4c4dfe60	; 54.0 * 10^6
+.endif
 
 	.text
 
@@ -37,7 +46,7 @@ clk_get_freq:
 	.endswitch
 
 L_xosc:
-	mov   r0, 0x4b927c00	; 19.2 * 10^6
+	mov   r0, OSCFREQ
 	fdiv  r0, r0, r2
 	floor r0, r0, sasl0
 	rts
@@ -103,7 +112,7 @@ L_pll:
 	fmul r2, r2, r0
 
 	;; calculate base VCO rate
-	mov   r0, 0x4b927c00	; 19.2 * 10^6
+	mov   r0, OSCFREQ
 	fmul  r5, r0, r5
 
 	;; apply cumulated clock divider
