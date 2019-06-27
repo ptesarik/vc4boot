@@ -1,4 +1,6 @@
 
+.include "config.inc"
+
 ;;;
 ;;; GPIO MMIO
 ;;;
@@ -65,6 +67,12 @@ OTP_DATA_REG            = 0x18
 OTP_ADDR_REG            = 0x1c
 OTP_WRITE_DATA_READ_REG = 0x20
 OTP_INIT_STATUS_REG     = 0x24
+
+.if RPI_MODEL < 4
+	OTP_READY_BIT	= 0
+.else
+	OTP_READY_BIT	= 1
+.endif
 
 ;;;
 ;;; APB-to-wtap control

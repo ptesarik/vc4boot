@@ -65,7 +65,7 @@ otp_read_reg:
 	addcmpbge r0, -1, 0, 2b
 
 	ld  r0, (r1 + OTP_STATUS_REG)
-	btest r0, 0
+	btest r0, OTP_READY_BIT
 	beq  1b
 	ld   r0, (r1 + OTP_DATA_REG)
 	ldm  pc, (sp++)
