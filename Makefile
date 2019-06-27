@@ -8,7 +8,7 @@ OBJCOPY=vc4-elf-objcopy
 	$(AS) -o $@ $<
 
 %.elf: %.o libvc4.a
-	$(LD) -o $@ $^
+	$(LD) -o $@ $^ start_elf.ld
 
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
