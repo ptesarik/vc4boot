@@ -1,3 +1,5 @@
+.include "mmio.inc"
+
 	.text
 	.org 0x200
 
