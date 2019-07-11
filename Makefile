@@ -8,6 +8,7 @@ LIBRARY_OBJS = \
 	clkgetf.o \
 	delay.o \
 	ledflash.o \
+	memset.o \
 	otp.o \
 	uart.o \
 	uart_putchars.o \
