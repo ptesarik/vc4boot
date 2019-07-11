@@ -4,6 +4,17 @@ RANLIB=vc4-elf-ranlib
 LD=vc4-elf-ld
 OBJCOPY=vc4-elf-objcopy
 
+LIBRARY_OBJS = \
+	clkgetf.o \
+	delay.o \
+	ledflash.o \
+	otp.o \
+	uart.o \
+	uart_putchars.o \
+	uart_putdec.o \
+	uart_puthex.o \
+	uart_puts.o
+
 %.o: %.S
 	$(AS) -o $@ $<
 
@@ -13,6 +24,6 @@ OBJCOPY=vc4-elf-objcopy
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
 
-libvc4.a: clkgetf.o delay.o ledflash.o otp.o uart.o uart_putchars.o uart_putdec.o uart_puthex.o uart_puts.o
+libvc4.a: $(LIBRARY_OBJS)
 	$(AR) cr $@ $^
 	$(RANLIB) $@
