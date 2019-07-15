@@ -33,13 +33,9 @@ L_set_words:
 	or    r1, r3
 
 	;; store words
-	lsr   r3, r2, 2
 L_words_loop:
 	st    r1, (r0++)
-	addcmpbne r3, -1, 0, L_words_loop
-
-	;; remaining bytes
-	bmask r2, 2
+	addcmpbhs r2, -4, 4, L_words_loop
 
 L_set_bytes:
 	beq   r2, 0, L_done
