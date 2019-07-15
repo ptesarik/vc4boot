@@ -9,6 +9,7 @@ LIBRARY_OBJS = \
 	delay.o \
 	ledflash.o \
 	memset.o \
+	memcpy.o \
 	otp.o \
 	uart.o \
 	uart_putchars.o \
