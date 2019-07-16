@@ -12,6 +12,7 @@ LIBRARY_OBJS = \
 	memcpy.o \
 	otp.o \
 	uart.o \
+	uart_flush.o \
 	uart_putchars.o \
 	uart_putdec.o \
 	uart_puthex.o \
