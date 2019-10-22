@@ -14,7 +14,7 @@ led_flash:
 	or  r0, (1<<18)
 	st  r0, (r1 + GPIO_GPFSEL1)
 
-.flash_loop:
+.L_flash_loop:
 	st  r2, (r1 + GPIO_GPSET0)
 
 	mov r0, 0x00100000
@@ -24,4 +24,4 @@ led_flash:
 
 	mov r0, 0x00100000
 	bl  delay
-	b .flash_loop
+	b .L_flash_loop

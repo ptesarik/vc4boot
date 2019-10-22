@@ -12,19 +12,19 @@ memset:
 
 	;; do not bother with words unless you can be sure that the
 	;; loop gets executed at least once even if r0 is unaligned
-	blo   r2, 8, L_set_bytes
+	blo   r2, 8, .L_set_bytes
 
 	bmask r3, r0, 2
-	beq   r3, 0, L_set_words
+	beq   r3, 0, .L_set_words
 
 	;; store bytes until r0 is word-aligned
 	sub   r2, 4
 	add   r2, r3
-L_align_loop:
+.L_align_loop:
 	stb   r1, (r0++)
-	addcmpbne r3, 1, 4, L_align_loop
+	addcmpbne r3, 1, 4, .L_align_loop
 
-L_set_words:
+.L_set_words:
 	;; repeat fill value in all bytes of r1
 	bmask r1, 8
 	shl   r3, r1, 8
@@ -33,14 +33,14 @@ L_set_words:
 	or    r1, r3
 
 	;; store words
-L_words_loop:
+.L_words_loop:
 	st    r1, (r0++)
-	addcmpbhs r2, -4, 4, L_words_loop
+	addcmpbhs r2, -4, 4, .L_words_loop
 
-L_set_bytes:
-	beq   r2, 0, L_done
-L_bytes_loop:
+.L_set_bytes:
+	beq   r2, 0, .L_done
+.L_bytes_loop:
 	stb   r1, (r0++)
-	addcmpbne r2, -1, 0, L_bytes_loop
-L_done:
+	addcmpbne r2, -1, 0, .L_bytes_loop
+.L_done:
 	rts
