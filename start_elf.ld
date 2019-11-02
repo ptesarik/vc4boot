@@ -27,7 +27,6 @@ OUTPUT_FORMAT("elf32-vc4", "elf32-vc4",
               "elf32-vc4")
 OUTPUT_ARCH(vc4)
 ENTRY(_start)
-GROUP(-lgloss -lc -lteststub)
 MEMORY
 {
   ram (rwx) : ORIGIN = 0xcec00000, LENGTH = 0x10000000
@@ -39,7 +38,6 @@ SECTIONS
   ALIGN(32)
   {
     PROVIDE(_start = .);
-    . = ALIGN(4);
     *(.text .stub .text.* .gnu.linkonce.t.*)
     *(.gnu.warning)
     KEEP (*(.init))
@@ -63,7 +61,6 @@ SECTIONS
   /* Read-only data */
   .rodata         :
   {
-    . = ALIGN(4);
     _frodata = .;
     *(.rodata .rodata.* .gnu.linkonce.r.*)
     *(.rodata1)
@@ -71,8 +68,8 @@ SECTIONS
   } >ram
   /* Data */
   .data           :
+  ALIGN(32)
   {
-    . = ALIGN(4);
     _fdata = .;
     *(.data .data.* .gnu.linkonce.d.*)
     *(.data1)
@@ -80,6 +77,7 @@ SECTIONS
     *(.sdata .sdata.* .gnu.linkonce.s.*)
     _edata = .;
   } >ram
+  .isr_vectors   : ALIGN(0x200) { *(.isr_vectors .isr_vectors.*) } >ram
   /* BSS */
   .bss           :
   {

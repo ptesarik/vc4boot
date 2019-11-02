@@ -22,7 +22,7 @@ LIBRARY_OBJS = \
 	$(AS) -o $@ $<
 
 %.elf: %.o libvc4.a
-	$(LD) -o $@ $^ start_elf.ld
+	$(LD) -o $@ $^ -T start_elf.ld
 
 %.bin: %.elf
 	$(OBJCOPY) -O binary $< $@
