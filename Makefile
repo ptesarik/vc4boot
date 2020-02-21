@@ -11,6 +11,7 @@ LIBRARY_OBJS = \
 	memset.o \
 	memcpy.o \
 	otp.o \
+	otp_write.o \
 	uart.o \
 	uart_dumpregs.o \
 	uart_flush.o \

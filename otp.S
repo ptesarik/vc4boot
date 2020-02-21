@@ -29,6 +29,7 @@ OTP_MAX_WAIT	= 1000
 ;;;
 ;;; Guaranteed to clobber no registers except r0.
 ;;; Always returns zero (success) in r0.
+	.global otp_delay
 otp_delay:
 	mov r0, 30
 	b   delay
