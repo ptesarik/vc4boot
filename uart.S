@@ -41,7 +41,7 @@ uart_init:
 	mov r2, 1
 	mov r1, UART1_BASE
 	st  r2, (r1 + UART_AUX_ENABLES)
-	mov r2, 3
+	mov r2, 0x43
 	st  r0, (r1 + UART_AUX_MU_IER_REG)
 	st  r0, (r1 + UART_AUX_MU_CNTL_REG)
 	st  r2, (r1 + UART_AUX_MU_LCR_REG)
@@ -52,6 +52,14 @@ uart_init:
 	add r0, r3, -1
 	mov r2, 3
 	st  r0, (r1 + UART_AUX_MU_BAUD_REG)
-	st  r2, (r1 + UART_AUX_MU_LCR_REG)
 	st  r2, (r1 + UART_AUX_MU_CNTL_REG)
+
+	;; keep TX low for two bits before returning to the caller,
+	;; so our serial connection peer can detect a framing error
+	;; and recover the start of the next frame if a transmission
+	;; was interrupted
+	shl r0, r3, 4
+	bl  delay
+	st  r2, (r1 + UART_AUX_MU_LCR_REG)
+
 	ldm pc,(sp++)
