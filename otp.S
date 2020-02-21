@@ -17,21 +17,19 @@ OTP_MAX_WAIT	= 1000
 ;;; registers. Apparently, the OTP takes its clock directly from
 ;;; the oscillator.
 ;;;
-;;; Knowing that the oscillator ticks at 54.0 MHz (or 19.2 MHz
-;;; on the RPi3) and the VPU runs at 600 MHz max, the access can
-;;; be replaced with a delay of 600/19.2 = 31.25 VPU ticks.
+;;; FIXME: There is some more magic involved. Waiting until the next
+;;; oscillator tick is not enough. I have tested with 100 VPU cycles
+;;; at 500 MHz (0.2 us), but it could be just my piece of hardware...
+;;; A good safe value should be determined.
 ;;;
-;;; One catch is that we do not know whether the VPU can execute
-;;; multiple instructions simultaneously, but let's assume that
-;;; one execution of a loop takes at least 1 cycle, and the call
-;;; overhead another two. This is how I figured out the "magic"
-;;; number 30 below.
+;;; FWIW the OCOTP Linux driver 1 us, but that's most likely because
+;;; udelay() cannot wait less than that.
 ;;;
 ;;; Guaranteed to clobber no registers except r0.
 ;;; Always returns zero (success) in r0.
 	.global otp_delay
 otp_delay:
-	mov r0, 30
+	mov r0, 50
 	b   delay
 
 ;;; enable OTP operation and reset its state
