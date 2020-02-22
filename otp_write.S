@@ -33,7 +33,7 @@ otp_enable_program:
 	addcmpbgt r6, -1, 0, 1b
 
 	;; wait for status bit 2 (max 32000 attempts)
-	mov r6, 32000
+	mov r6, OTP_MAX_WAIT
 	mov r2, 0
 2:
 	mov r0, 30

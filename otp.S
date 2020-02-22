@@ -4,7 +4,7 @@
 
 .include "mmio.inc"
 
-OTP_MAX_WAIT	= 1000
+OTP_MAX_WAIT	= 10000
 
 	.text
 
